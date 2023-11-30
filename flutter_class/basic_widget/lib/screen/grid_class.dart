@@ -8,29 +8,37 @@ class GridViewClass extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: GridView.count(
-        crossAxisCount: 2,
-        childAspectRatio: 0.9,
-        children: List.generate(userDataDetails.length, (index) {
-          final userdataItem = userDataDetails[index];
-          return CustomGridUserDetailWidget(userdataItem: userdataItem);
-        }),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            GridView.count(
+              crossAxisCount: 2,
+              childAspectRatio: 0.8,
+              crossAxisSpacing: 8.0,
+              mainAxisSpacing: 15.0,
+              shrinkWrap: true,
+              children: List.generate(
+                  userDataDetails.length,
+                  (index) => CustomGridUserDetailWidget(
+                      userdataItem: userDataDetails[index])),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
 class CustomGridUserDetailWidget extends StatelessWidget {
-  const CustomGridUserDetailWidget({
-    super.key,
-    required this.userdataItem,
-  });
   final UserData userdataItem;
+  const CustomGridUserDetailWidget({super.key, required this.userdataItem});
 
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
     return Card(
+      elevation: 5.0,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
