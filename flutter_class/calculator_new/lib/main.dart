@@ -15,7 +15,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: const CalculatorView(),
@@ -23,13 +22,31 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class CalculatorView extends StatelessWidget {
+class CalculatorView extends StatefulWidget {
   const CalculatorView({super.key});
+
+  @override
+  State<CalculatorView> createState() => _CalculatorViewState();
+}
+
+class _CalculatorViewState extends State<CalculatorView> {
+  int calculatorValue = 0;
+
+  void updateCalculatorValue(String buttonText) {
+    setState(() {
+      if (buttonText == '*') {
+        // Perform the multiplication or any other operation
+        // For simplicity, let's just increment the value by 1 when '*'
+        calculatorValue += 1;
+      } else {
+        // For other buttons, you can implement the logic accordingly
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: SafeArea(
         child: Column(
           children: [
@@ -71,10 +88,10 @@ class CalculatorView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CustomCalculatorButton(buttonText: '7', press: () {}),
-                          CustomCalculatorButton(buttonText: '8', press: () {}),
-                          CustomCalculatorButton(buttonText: '9', press: () {}),
-                          CustomCalculatorButton(buttonText: '*', press: () {}),
+                          CustomCalculatorButton(buttonText: '7', press: ()=>updateCalculatorValue('7')),
+                          CustomCalculatorButton(buttonText: '8', press: ()=>updateCalculatorValue('8')),
+                          CustomCalculatorButton(buttonText: '9', press: ()=>updateCalculatorValue('9')),
+                          CustomCalculatorButton(buttonText: '*', press: ()=>updateCalculatorValue('*')),
                         ],
                       ),
                       Row(

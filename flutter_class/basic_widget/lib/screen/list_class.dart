@@ -64,6 +64,7 @@ class _FlutterListClassState extends State<FlutterListClass> {
               height: 300,
               child: ListView.builder(
                 shrinkWrap: true,
+                reverse: true,
                 itemCount: products.length,
                 itemBuilder: (context, index) {
                   return ListTile(title: Text(products[index]));

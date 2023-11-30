@@ -1,15 +1,4 @@
-import 'package:basic_widget/screen/card_class.dart';
-import 'package:basic_widget/screen/gesture_class.dart';
-import 'package:basic_widget/screen/home.dart';
-import 'package:basic_widget/screen/random_class.dart';
-import 'package:basic_widget/screen/stack_class.dart';
-import 'package:basic_widget/screen/tab_bar.dart';
-import 'package:flutter/material.dart';
-
-import 'screen/drawer_class.dart';
-import 'screen/list_class.dart';
-import 'screen/row_and_column.dart';
-import 'screen/text and textfield_class.dart';
+import 'export.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -77,9 +66,14 @@ class MainScreen extends StatelessWidget {
             pressWIdgetScreen: DrawerClass(),
           ),
           BodyComponet(
-            title: 'List',
+            title: 'ListView',
             iconData: Icons.list_alt_sharp,
             pressWIdgetScreen: FlutterListClass(),
+          ),
+          BodyComponet(
+            title: 'GridView',
+            iconData: Icons.grid_4x4_outlined,
+            pressWIdgetScreen: GridViewClass(),
           ),
         ]),
       ),
