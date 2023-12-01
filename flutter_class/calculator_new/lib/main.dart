@@ -30,14 +30,14 @@ class CalculatorView extends StatefulWidget {
 }
 
 class _CalculatorViewState extends State<CalculatorView> {
-  int calculatorValue = 0;
+  int equation = 0;
 
   void updateCalculatorValue(String buttonText) {
     setState(() {
       if (buttonText == '*') {
         // Perform the multiplication or any other operation
         // For simplicity, let's just increment the value by 1 when '*'
-        calculatorValue += 1;
+        equation += 1;
       } else {
         // For other buttons, you can implement the logic accordingly
       }
@@ -88,37 +88,69 @@ class _CalculatorViewState extends State<CalculatorView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CustomCalculatorButton(buttonText: '7', press: ()=>updateCalculatorValue('7')),
-                          CustomCalculatorButton(buttonText: '8', press: ()=>updateCalculatorValue('8')),
-                          CustomCalculatorButton(buttonText: '9', press: ()=>updateCalculatorValue('9')),
-                          CustomCalculatorButton(buttonText: '*', press: ()=>updateCalculatorValue('*')),
+                          CustomCalculatorButton(
+                              buttonText: '7',
+                              press: () => updateCalculatorValue('7')),
+                          CustomCalculatorButton(
+                              buttonText: '8',
+                              press: () => updateCalculatorValue('8')),
+                          CustomCalculatorButton(
+                              buttonText: '9',
+                              press: () => updateCalculatorValue('9')),
+                          CustomCalculatorButton(
+                              buttonText: '*',
+                              press: () => updateCalculatorValue('*')),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CustomCalculatorButton(buttonText: '4', press: () {}),
-                          CustomCalculatorButton(buttonText: '5', press: () {}),
-                          CustomCalculatorButton(buttonText: '6', press: () {}),
-                          CustomCalculatorButton(buttonText: '/', press: () {}),
+                          CustomCalculatorButton(
+                              buttonText: '4',
+                              press: () => updateCalculatorValue('4')),
+                          CustomCalculatorButton(
+                              buttonText: '5',
+                              press: () => updateCalculatorValue('5')),
+                          CustomCalculatorButton(
+                              buttonText: '6',
+                              press: () => updateCalculatorValue('6')),
+                          CustomCalculatorButton(
+                              buttonText: '/',
+                              press: () => updateCalculatorValue('/')),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CustomCalculatorButton(buttonText: '1', press: () {}),
-                          CustomCalculatorButton(buttonText: '2', press: () {}),
-                          CustomCalculatorButton(buttonText: '3', press: () {}),
-                          CustomCalculatorButton(buttonText: '-', press: () {}),
+                          CustomCalculatorButton(
+                              buttonText: '1',
+                              press: () => updateCalculatorValue('1')),
+                          CustomCalculatorButton(
+                              buttonText: '2',
+                              press: () => updateCalculatorValue('2')),
+                          CustomCalculatorButton(
+                              buttonText: '3',
+                              press: () => updateCalculatorValue('3')),
+                          CustomCalculatorButton(
+                              buttonText: '-',
+                              press: () => updateCalculatorValue('=')),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CustomCalculatorButton(buttonText: '.', press: () {}),
-                          CustomCalculatorButton(buttonText: '0', press: () {}),
-                          CustomCalculatorButton(buttonText: '=', press: () {}),
-                          CustomCalculatorButton(buttonText: '+', press: () {}),
+                          CustomCalculatorButton(
+                              buttonText: '.',
+                              press: () => updateCalculatorValue('.')),
+                          CustomCalculatorButton(
+                              buttonText: '0',
+                              press: () => updateCalculatorValue('0')),
+                          CustomCalculatorButton(
+                              buttonText: '=',
+                              press: () => updateCalculatorValue('=')),
+                          CustomCalculatorButton(
+                              buttonText: '+',
+                              press: () => updateCalculatorValue('+')),
                         ],
                       ),
                     ],

@@ -1,4 +1,6 @@
 import 'export.dart';
+import 'screen/checkbox_class.dart';
+import 'screen/toast_class.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -74,6 +76,15 @@ class MainScreen extends StatelessWidget {
             title: 'GridView',
             iconData: Icons.grid_4x4_outlined,
             pressWIdgetScreen: GridViewClass(),
+          ),
+          BodyComponet(
+            title: 'Toast',
+            iconData: Icons.table_rows_outlined,
+            pressWIdgetScreen: ToastClass(),
+          ),BodyComponet(
+            title: 'Check Box And Radio Button',
+            iconData: Icons.check_box_outline_blank,
+            pressWIdgetScreen: CheckBoxClass(),
           ),
         ]),
       ),
