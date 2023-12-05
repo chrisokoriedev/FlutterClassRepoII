@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,18 +31,30 @@ class CalculatorView extends StatefulWidget {
 }
 
 class _CalculatorViewState extends State<CalculatorView> {
-  int equation = 0;
+  String equation = '', result = '';
+  final FocusNode _focusNode = FocusNode();
 
   void updateCalculatorValue(String buttonText) {
     setState(() {
-      if (buttonText == '*') {
-        // Perform the multiplication or any other operation
-        // For simplicity, let's just increment the value by 1 when '*'
-        equation += 1;
+      if (buttonText == 'C') {
+        equation = '';
+        result = '';
+      } else if (buttonText == '⌫') {
+        equation = equation.substring(0, equation.length - 1);
+      } else if (buttonText == '=') {
+        try {
+          Parser parser = Parser();
+          Expression expression = parser.parse(equation);
+          ContextModel cm = ContextModel(); //create context model
+          result = '${expression.evaluate(EvaluationType.REAL, cm)}';
+        } catch (error) {
+          result = error.toString();
+        }
       } else {
-        // For other buttons, you can implement the logic accordingly
+        equation += buttonText;
       }
     });
+    _focusNode.descendantsAreFocusable;
   }
 
   @override
@@ -55,17 +68,30 @@ class _CalculatorViewState extends State<CalculatorView> {
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: const Column(
+                  child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(
-                          '0',
-                          style: TextStyle(fontSize: 60),
+                        TextFormField(
+                          focusNode: _focusNode,
+                          controller: TextEditingController(text: equation),
+                          textAlign: TextAlign.end,
+                          readOnly: true,
+                          style: const TextStyle(fontSize: 60),
+                          onChanged: (newValue) {
+                            setState(() {
+                              equation = newValue;
+                              print(newValue);
+                            });
+                          },
                         ),
+                        // Text(
+                        //   equation,
+                        //   style: const TextStyle(fontSize: 60),
+                        // ),
                         Text(
-                          '0',
-                          style: TextStyle(fontSize: 60),
+                          result,
+                          style: const TextStyle(fontSize: 30),
                         ),
                       ]),
                 )),
@@ -85,6 +111,24 @@ class _CalculatorViewState extends State<CalculatorView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomCalculatorButton(
+                              buttonText: 'C',
+                              press: () => updateCalculatorValue('C')),
+                          CustomCalculatorButton(
+                              buttonText: '( ',
+                              press: () => updateCalculatorValue('()')),
+                          CustomCalculatorButton(
+                              buttonText: ')',
+                              press: () => updateCalculatorValue(')')),
+                          CustomCalculatorButton(
+                              buttonText: '⌫',
+                              buttonTextBackgroundColor: Colors.red,
+                              press: () => updateCalculatorValue('⌫')),
+                        ],
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -178,15 +222,18 @@ class CustomCalculatorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: 80,
-        height: 80,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            color: buttonTextBackgroundColor,
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.blueGrey, width: 2.0)),
-        child: Text(buttonText,
-            style: TextStyle(fontSize: 30, color: buttonTextColor)));
+    return GestureDetector(
+      onTap: press,
+      child: Container(
+          width: 80,
+          height: 80,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: buttonTextBackgroundColor,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.blueGrey, width: 2.0)),
+          child: Text(buttonText,
+              style: TextStyle(fontSize: 30, color: buttonTextColor))),
+    );
   }
 }
