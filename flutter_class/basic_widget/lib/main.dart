@@ -1,7 +1,18 @@
 import 'package:basic_widget/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'model/notedpad.dart';
+class Contants{
+  static const String hiveBoxName='notes';
+}
 //generator
-void main() => runApp(const MyApp());
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(NotePadAdapter());
+  await Hive.openBox<NotePad>(Contants.hiveBoxName);
+  runApp(const MyApp());
+}
 
 //root widget
 class MyApp extends StatelessWidget {

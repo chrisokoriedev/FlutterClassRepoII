@@ -37,7 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   math_expressions:
 
+
+
 dev_dependencies:
+  hive_generator: 
+  build_runner: 
   flutter_test:
     sdk: flutter
 

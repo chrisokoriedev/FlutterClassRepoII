@@ -9,8 +9,11 @@ class NotedPadApp extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Notepad'),
-        backgroundColor: Colors.red,
+        title: const Text(
+          'Notepad',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+        ),
+        backgroundColor: Colors.purple,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
@@ -34,6 +37,7 @@ class NotedPadApp extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.push(
             context, MaterialPageRoute(builder: (_) => const AddNote())),
