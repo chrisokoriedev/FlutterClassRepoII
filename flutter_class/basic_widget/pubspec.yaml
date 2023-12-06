@@ -41,6 +41,7 @@ dependencies:
   hive: ^2.0.1
   hive_flutter:
   path_provider:
+  timeago: ^3.6.0
   
   
 

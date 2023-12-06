@@ -45,34 +45,45 @@ class _AddNoteState extends State<AddNote> {
       ),
       body: Form(
         key: formKey,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text('Add Note'),
-              const Gap(40),
-              TextFormField(
-                controller: titleController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'enter value';
-                  }
-                  return null;
-                },
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text('Add Note'),
+                    const Gap(40),
+                    TextFormField(
+                      controller: titleController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'enter value';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      maxLines: null,
+                      controller: descriptionController,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'enter value';
+                        }
+                        return null;
+                      },
+                    ),
+                    const Gap(20),
+                  ],
+                ),
               ),
-              TextFormField(
-                controller: descriptionController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'enter value';
-                  }
-                  return null;
-                },
-              ),
-              const Gap(20),
-              ElevatedButton(
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: ElevatedButton(
                 onPressed: submitNote,
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red),
@@ -80,10 +91,13 @@ class _AddNoteState extends State<AddNote> {
                         Size(double.maxFinite, 30)),
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)))),
-                child: const Text('Save Note'),
+                child: const Text(
+                  'Save Note',
+                  style: TextStyle(color: Colors.white, fontSize: 25),
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
