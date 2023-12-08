@@ -18,6 +18,8 @@ dependencies:
   get: ^4.6.6
   dio:
   bottom_navy_bar: ^6.0.0
+  flutter_card_swiper:
+  cached_network_image:
 
 icons_launcher:
   image_path: "assets/app_icon.png"
