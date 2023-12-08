@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cocktailapp/service/api_helper.dart';
 import 'package:cocktailapp/util/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -12,6 +13,11 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final CardSwiperController cardSwiperController = CardSwiperController();
+  @override
+  void initState() {
+    super.initState();
+    ApiHelper.getDrinkList();
+  }
   @override
   Widget build(BuildContext context) {
     List imageList = [
@@ -71,7 +77,7 @@ class _HomeViewState extends State<HomeView> {
                     borderRadius: BorderRadius.circular(30),
                     color: AppColors.lightDarkColor,
                     image: DecorationImage(
-                        image: CachedNetworkImageProvider(imageList[index]), fit: BoxFit.cover)),
+                        image: NetworkImage(imageList[index]), fit: BoxFit.cover)),
               );
             },
           ),
