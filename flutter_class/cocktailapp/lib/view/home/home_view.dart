@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cocktailapp/controller/drink_controller.dart';
 import 'package:cocktailapp/service/api_helper.dart';
 import 'package:cocktailapp/util/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:get/get.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -13,11 +15,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final CardSwiperController cardSwiperController = CardSwiperController();
-  @override
-  void initState() {
-    super.initState();
-    ApiHelper.getDrinkList();
-  }
+  final DrinkController _drinkController = Get.put(DrinkController());
   @override
   Widget build(BuildContext context) {
     List imageList = [
@@ -26,8 +24,7 @@ class _HomeViewState extends State<HomeView> {
       'https://img.freepik.com/free-photo/front-view-blue-cool-lemonade-with-ice-blue-background-fruit-cold-cocktail-drink-color-bar-juice_140725-156766.jpg?size=626&ext=jpg',
     ];
     return SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
       child: Column(children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,30 +55,58 @@ class _HomeViewState extends State<HomeView> {
           ],
         ),
         const SizedBox(height: 90),
-     
-        SizedBox(
-          width: double.infinity,
-          height: 400,
-          child: CardSwiper(
-            padding: EdgeInsets.zero,
-            scale: 0.2,
-            isLoop: true,
-            controller: cardSwiperController,
-            cardsCount: imageList.length,
-            cardBuilder: (BuildContext context, int index,
-                int horizontalOffsetPercentage, int verticalOffsetPercentage) {
-              return Container(
-                width: 300,
-                height: 450,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: AppColors.lightDarkColor,
-                    image: DecorationImage(
-                        image: NetworkImage(imageList[index]), fit: BoxFit.cover)),
-              );
-            },
-          ),
-        ),
+        Obx(() {
+          if (_drinkController.isLoading.value) {
+            return Column(
+              children: [
+                const Center(child: CircularProgressIndicator()),
+              ],
+            );
+          } else if (_drinkController.dataModel.drinks.isEmpty) {
+            return const Text('No data');
+          } else {
+            return SizedBox(
+              width: double.infinity,
+              height: 400,
+              child: CardSwiper(
+                padding: EdgeInsets.zero,
+                scale: 0.2,
+                isLoop: true,
+                controller: cardSwiperController,
+                cardsCount: _drinkController.dataModel.drinks.length,
+                cardBuilder: (BuildContext context,
+                    int index,
+                    int horizontalOffsetPercentage,
+                    int verticalOffsetPercentage) {
+                  final dataContent = _drinkController.dataModel.drinks[index];
+                  return Container(
+                    width: 300,
+                    height: 450,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: AppColors.lightDarkColor,
+                        image: DecorationImage(
+                            image: NetworkImage(dataContent.strDrinkThumb),
+                            fit: BoxFit.cover)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
+                            decoration: BoxDecoration(color: AppColors.appBgColor.withOpacity(0.5)),
+                            child: Text(dataContent.strDrink,style: const TextStyle(fontSize: 25),))
+                      ],
+                    ),
+                  );
+                },
+              ),
+            );
+          }
+        }),
       ]),
     );
   }
