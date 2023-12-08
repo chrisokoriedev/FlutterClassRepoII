@@ -34,6 +34,7 @@ flutter_native_splash:
   color_dark: "#121212"
   image_dark: assets/splash.png
   branding_dark: assets/splash.png
+  android_gravity: fill
 
 dev_dependencies:
   flutter_test:

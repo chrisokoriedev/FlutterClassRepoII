@@ -24,6 +24,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.appBgColor,
         body: PageView(
             controller: _pageController,
             onPageChanged: (index) => setState(() => _selectedIndex = index),
